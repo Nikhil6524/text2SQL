@@ -9,3 +9,7 @@
    npm run dev
 
 The app expects backend API at `VITE_API_BASE_URL`.
+
+## Environment Variables
+
+- `VITE_API_BASE_URL`: backend base URL (default in code: `http://127.0.0.1:8000/api/v1`)
