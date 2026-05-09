@@ -37,3 +37,9 @@ Thumbs.db
 
 # Database
 *.sqlite3
+
+# Vector store
+.chroma/
+
+# Model cache
+.cache/

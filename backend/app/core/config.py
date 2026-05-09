@@ -19,6 +19,10 @@ class Settings:
     groq_api_key: str | None = os.getenv("GROQ_API_KEY")
     groq_model: str = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
 
+    chroma_path: str = os.getenv("CHROMA_PATH", ".chroma")
+    rag_top_k: int = int(os.getenv("RAG_TOP_K", "6"))
+    embedding_model: str = os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2")
+
     login_username: str = os.getenv("APP_LOGIN_USERNAME", "admin")
     login_password: str = os.getenv("APP_LOGIN_PASSWORD", "admin123")
     token_ttl_minutes: int = int(os.getenv("TOKEN_TTL_MINUTES", "480"))

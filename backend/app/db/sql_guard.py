@@ -89,4 +89,22 @@ def validate_sql(sql: str, schema: Dict[str, List[str]]) -> str:
         if table not in allowed_tables:
             raise HTTPException(status_code=400, detail=f"Unknown or unauthorized table: {table}")
 
+    _validate_id_literals(cleaned)
+
     return cleaned
+
+
+def _validate_id_literals(sql: str) -> None:
+    patterns = [
+        r"\b([a-zA-Z_][\w\.]*)\b\s*=\s*'([^']*)'",
+        r"\b([a-zA-Z_][\w\.]*)\b\s*=\s*\"([^\"]*)\"",
+    ]
+    for pattern in patterns:
+        for column, value in re.findall(pattern, sql):
+            col = _normalize_identifier(column).lower()
+            if col == "id" or col.endswith("_id"):
+                if not value.isdigit():
+                    raise HTTPException(
+                        status_code=400,
+                        detail="ID columns must use numeric literals or named parameters",
+                    )

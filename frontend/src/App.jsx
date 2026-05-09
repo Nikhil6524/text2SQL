@@ -19,7 +19,16 @@ export default function App() {
   const [statsError, setStatsError] = useState("");
 
   const chatHistory = useMemo(
-    () => messages.map((msg) => ({ role: msg.role, content: msg.content })),
+    () =>
+      messages.map((msg) => {
+        if (msg.role === "assistant" && msg.sql_executed) {
+          return {
+            role: msg.role,
+            content: `${msg.content}\nSQL: ${msg.sql_executed}`,
+          };
+        }
+        return { role: msg.role, content: msg.content };
+      }),
     [messages]
   );
 
